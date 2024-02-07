@@ -1,0 +1,64 @@
+"use client";
+import React, {
+  InputHTMLAttributes,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
+import { loginFormContext } from "../loginContext";
+
+export const Input = ({
+  className,
+  required,
+  id,
+  ...rest
+}: InputHTMLAttributes<HTMLInputElement>) => {
+  if (!id) {
+    console.error("id is required in input field!");
+    return;
+  }
+  const { state, setState, setErrorState, errors } =
+    useContext(loginFormContext);
+
+  useEffect(() => {
+    setErrorState((prevState) => ({
+      ...prevState,
+      ...(required ? { [id]: "Please fill this field!" } : {}),
+    }));
+  }, []);
+
+  const resetErrors = useCallback(() => {
+    setErrorState((prevState) => {
+      if (prevState[id]) {
+        const { [id]: deletedError, ...newErrors } = prevState;
+        return newErrors;
+      }
+      return prevState;
+    });
+  }, [id]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    resetErrors();
+    setState((prevState) => ({ ...prevState, [id]: value }));
+  };
+
+  return (
+    <>
+      <input
+        className={
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" +
+          className
+        }
+        id={id}
+        required={required}
+        {...rest}
+        onChange={handleChange}
+        value={state[id] || ""}
+      />
+      {errors[id] && (
+        <p className="text-red-500 text-xs italic">{errors[id]}</p>
+      )}
+    </>
+  );
+};

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SignUpFormContextProvider } from "./signupContext";
+import { LoginFormContextProvider } from "./loginContext";
 
 export default function SignUpPageLayout({
   children,
@@ -10,16 +10,16 @@ export default function SignUpPageLayout({
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md p-8 m-4 bg-white rounded shadow-md dark:bg-gray-800">
         <h1 className="mb-4 text-2xl text-center font-bold text-gray-900 dark:text-gray-100">
-          Create an Account
+          Login
         </h1>
-        <SignUpFormContextProvider>{children}</SignUpFormContextProvider>
+        <LoginFormContextProvider>{children}</LoginFormContextProvider>
         <p className="mt-4 text-center text-gray-500 dark:text-gray-400">
-          Already have an account?
+          Don't have an account?
           <Link
             className="underline text-blue-500 hover:text-blue-700"
-            href="/login"
+            href="/signup"
           >
-            Login
+            Register
           </Link>
         </p>
       </div>

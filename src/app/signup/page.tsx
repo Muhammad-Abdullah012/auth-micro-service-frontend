@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "./components/input";
+import { Button } from "./components/button";
 
 export default function SignUpPage() {
   return (

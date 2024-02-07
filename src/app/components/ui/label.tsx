@@ -1,4 +1,3 @@
-"use-client";
 import React, { LabelHTMLAttributes } from "react";
 
 export const Label = ({
