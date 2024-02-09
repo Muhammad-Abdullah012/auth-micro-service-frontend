@@ -1,14 +1,17 @@
 "use client";
 import React, { ButtonHTMLAttributes, useContext } from "react";
+import { useRouter } from "next/navigation";
 import { loginFormContext } from "../loginContext";
 import { request } from "../../../utils/request";
-import { BEARER_TOKEN, REFRESH_TOKEN } from "@/constants";
+import { BEARER_TOKEN, REFRESH_TOKEN, USER_IS_LOGGED_OUT } from "@/constants";
 
 export const Button = ({
   children,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { errors, state } = useContext(loginFormContext);
+  const router = useRouter();
+
   const handleSubmit = () => {
     if (Object.keys(state).length === 0) {
       console.error("Please fill data!");
@@ -23,7 +26,7 @@ export const Button = ({
           : { username: state.emailOrUsername }),
       })
         .then((res) => {
-          if (res == null) return;
+          if (res == null || res === USER_IS_LOGGED_OUT || !res.ok) return;
           localStorage.setItem(
             BEARER_TOKEN,
             res.json?.data?.bearer?.token ?? ""
@@ -32,7 +35,7 @@ export const Button = ({
             REFRESH_TOKEN,
             res.json?.data?.refresh?.token ?? ""
           );
-          console.log("Response from backend ==> ", res.json);
+          router.replace("/");
         })
         .catch((err) => console.error("Error sending request => ", err));
 

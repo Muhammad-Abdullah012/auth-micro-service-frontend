@@ -1,5 +1,9 @@
-import Image from "next/image";
+import { HomePage } from "./homePage";
 
 export default function Home() {
-  return <main className="min-h-screen">hello</main>;
+  return (
+    <main className="min-h-screen">
+      <HomePage />
+    </main>
+  );
 }

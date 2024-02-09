@@ -2,7 +2,7 @@
 import React, { ButtonHTMLAttributes, useContext } from "react";
 import { signUpFormContext } from "@/signup/signupContext";
 import { request } from "../../../utils/request";
-import { BEARER_TOKEN, REFRESH_TOKEN } from "@/constants";
+import { BEARER_TOKEN, REFRESH_TOKEN, USER_IS_LOGGED_OUT } from "@/constants";
 
 export const Button = ({
   children,
@@ -19,7 +19,7 @@ export const Button = ({
     if (Object.keys(errors).length <= 0) {
       request("signup", "POST", state)
         .then((res) => {
-          if (res == null) return;
+          if (res == null || res === USER_IS_LOGGED_OUT) return;
           localStorage.setItem(
             BEARER_TOKEN,
             res.json?.data?.bearer?.token ?? ""
