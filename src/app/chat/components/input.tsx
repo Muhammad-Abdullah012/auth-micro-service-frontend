@@ -12,23 +12,23 @@ export const Input = ({
   required,
   id,
   ...rest
-}: InputHTMLAttributes<HTMLInputElement>) => {
+}: InputHTMLAttributes<HTMLTextAreaElement>) => {
   if (!id) {
     console.error("id is required in input field!");
     return;
   }
   const { state, setState } = useContext(chatContext);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     setState((prevState) => ({ ...prevState, [id]: value }));
   };
 
   return (
     <>
-      <input
+      <textarea
         className={
-          "flex h-10 w-full rounded-md border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 border-0 box-shadow-none" +
+          "flex h-10 w-full rounded-md border-input border-2 border-gray-300 bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 border-0 box-shadow-none" +
           className
         }
         id={id}

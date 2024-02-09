@@ -1,62 +1,32 @@
 import React, { SVGProps } from "react";
+import { Input } from "./components/input";
+import { Button } from "./components/button";
+import { MessageComponent } from "./components/message";
 
 const ChatPage = () => {
   return (
-    <div className="w-full max-w-3xl mx-auto grid gap-4 p-6">
-      <div className="grid gap-2">
-        <h1 className="text-3xl font-bold">Chat with ChatGPT</h1>
-        <p className="text-gray-500 dark:text-gray-400">Ask me anything!</p>
-      </div>
-      <div className="grid gap-4">
-        <div className="flex items-start space-x-2">
-          <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-            <span className="flex h-full w-full items-center justify-center rounded-full bg-muted">
-              😎
-            </span>
-          </span>
-          <div className="bg-gray-100 rounded-lg dark:bg-gray-800 p-4">
-            <p className="text-sm">Hi there! How can I assist you today?</p>
-          </div>
+    <div className="w-full max-w-3xl h-full mx-auto flex flex-col gap-4 justify-between">
+      <div className="flex-1 overflow-hidden gap-4">
+        <div className="grid gap-2">
+          <h1 className="text-3xl font-bold text-center">Chat with ChatGPT</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-center">
+            Ask me anything!
+          </p>
         </div>
-        <div className="flex justify-end items-start space-x-2">
-          <div className="bg-gray-100 rounded-lg dark:bg-gray-800 p-4">
-            <p className="text-sm">
-              I'd like to learn more about your features.
-            </p>
-          </div>
-          <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-            <span className="flex h-full w-full items-center justify-center rounded-full bg-muted">
-              😎
-            </span>
-          </span>
-        </div>
-        <div className="flex items-start space-x-2">
-          <span className="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-            <span className="flex h-full w-full items-center justify-center rounded-full bg-muted">
-              😎
-            </span>
-          </span>
-          <div className="bg-gray-100 rounded-lg dark:bg-gray-800 p-4">
-            <p className="text-sm">
-              Our platform provides seamless deployment and collaboration for
-              your projects. You can easily deploy websites, APIs, and
-              serverless functions.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="border-t border-gray-200 dark:border-gray-800 pt-4">
-        <div className="flex items-center space-x-2">
-          <input
-            className="flex h-10 w-full rounded-md border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 flex-1 border-0 box-shadow-none"
-            id="message"
-            placeholder="Type a message..."
+        <div className="flex flex-col gap-4">
+          <MessageComponent isAvatarBefore={false} message={"Hello"} />
+          <MessageComponent
+            isAvatarBefore={true}
+            message={"Hello, how can i assist you!"}
           />
-          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-10">
-            <SendIcon />
-            <span className="sr-only">Send</span>
-          </button>
         </div>
+      </div>
+      <div className="fixed flex items-center w-[60vw] space-x-2 bottom-5 border-gray-200 dark:border-gray-800">
+        <Input id="prompt" required={true} />
+        <Button className="inline-flex items-center justify-center border-2 border-gray-300 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 w-10 bg-white">
+          <SendIcon />
+          <span className="sr-only">Send</span>
+        </Button>
       </div>
     </div>
   );
@@ -64,7 +34,7 @@ const ChatPage = () => {
 
 export default ChatPage;
 
-function SendIcon(props: SVGProps<SVGSVGElement>) {
+const SendIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -82,4 +52,4 @@ function SendIcon(props: SVGProps<SVGSVGElement>) {
       <path d="M22 2 11 13" />
     </svg>
   );
-}
+};

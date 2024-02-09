@@ -4,7 +4,7 @@ import { HeaderComponent, SignoutBtn } from "../headerComponents";
 
 export const Header = () => {
   return (
-    <header className="bg-gray-800 p-4 flex flex-col md:flex-row justify-between items-center">
+    <header className="sticky top-0 bg-gray-800 p-4 flex flex-col md:flex-row justify-between items-center z-50">
       <div className="text-white font-bold text-xl mb-4 md:mb-0">Chat GPT</div>
 
       <div className="relative inline-block text-left">
