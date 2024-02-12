@@ -6,9 +6,7 @@ export default function SignUpPage() {
   return (
     <form className="space-y-4">
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="firstName">
-          First Name
-        </Label>
+        <Label htmlFor="firstName">First Name</Label>
         <Input
           className="w-full mt-1"
           id="firstName"
@@ -18,9 +16,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="lastName">
-          Last Name
-        </Label>
+        <Label htmlFor="lastName">Last Name</Label>
         <Input
           className="w-full mt-1"
           id="lastName"
@@ -30,9 +26,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="username">
-          Username
-        </Label>
+        <Label htmlFor="username">Username</Label>
         <Input
           className="w-full mt-1"
           id="username"
@@ -42,9 +36,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="email">
-          Email
-        </Label>
+        <Label htmlFor="email">Email</Label>
         <Input
           className="w-full mt-1"
           id="email"
@@ -54,12 +46,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label
-          className="text-gray-900 dark:text-gray-100"
-          htmlFor="dateOfBirth"
-        >
-          Date of Birth
-        </Label>
+        <Label htmlFor="dateOfBirth">Date of Birth</Label>
         <Input
           className="w-full mt-1"
           id="dateOfBirth"
@@ -69,12 +56,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label
-          className="text-gray-900 dark:text-gray-100"
-          htmlFor="phoneNumber"
-        >
-          Phone Number
-        </Label>
+        <Label htmlFor="phoneNumber">Phone Number</Label>
         <Input
           className="w-full mt-1"
           id="phoneNumber"
@@ -83,9 +65,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="password">
-          Password
-        </Label>
+        <Label htmlFor="password">Password</Label>
         <Input
           className="w-full mt-1"
           id="password"
@@ -95,12 +75,7 @@ export default function SignUpPage() {
         />
       </div>
       <div>
-        <Label
-          className="text-gray-900 dark:text-gray-100"
-          htmlFor="confirmPassword"
-        >
-          Confirm Password
-        </Label>
+        <Label htmlFor="confirmPassword">Confirm Password</Label>
         <Input
           className="w-full mt-1"
           id="confirmPassword"

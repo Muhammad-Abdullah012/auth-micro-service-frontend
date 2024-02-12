@@ -6,12 +6,7 @@ export default function Component() {
   return (
     <div className="space-y-4">
       <div>
-        <Label
-          className="text-gray-900 dark:text-gray-100"
-          htmlFor="emailOrUsername"
-        >
-          Email or Username
-        </Label>
+        <Label htmlFor="emailOrUsername">Email or Username</Label>
         <Input
           className="w-full mt-1"
           id="emailOrUsername"
@@ -21,9 +16,7 @@ export default function Component() {
         />
       </div>
       <div>
-        <Label className="text-gray-900 dark:text-gray-100" htmlFor="password">
-          Password
-        </Label>
+        <Label htmlFor="password">Password</Label>
         <Input
           className="w-full mt-1"
           id="password"
