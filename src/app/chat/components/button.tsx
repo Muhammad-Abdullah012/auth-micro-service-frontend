@@ -5,12 +5,13 @@ import { chatContext } from "../chatContext";
 import { request } from "../../../utils/request";
 import { USER_IS_LOGGED_OUT } from "@/constants";
 import { toast } from "react-toastify";
+import { ROLE } from "../../../interfaces";
 
 export const Button = ({
   children,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const { errors, state } = useContext(chatContext);
+  const { errors, state, setState } = useContext(chatContext);
   const router = useRouter();
 
   const handleSubmit = () => {
@@ -28,6 +29,20 @@ export const Button = ({
             return;
           }
           if (res == null || !res.ok) return;
+          setState((prevState) => {
+            const newMessages = [
+              { role: ROLE.PROMPT, message: prevState.prompt },
+              { role: ROLE.RESPONSE, message: res.json.data },
+            ];
+
+            return {
+              ...prevState,
+              messages: prevState.messages
+                ? [...prevState.messages, ...newMessages]
+                : newMessages,
+              prompt: "",
+            };
+          });
         })
         .catch((err) => console.error("Error sending request => ", err));
     } else {

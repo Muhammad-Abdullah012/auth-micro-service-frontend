@@ -1,7 +1,7 @@
 import React, { SVGProps } from "react";
 import { Input } from "./components/input";
 import { Button } from "./components/button";
-import { MessageComponent } from "./components/message";
+import { MessagesList } from "./components/messagesList";
 
 const ChatPage = () => {
   return (
@@ -13,13 +13,7 @@ const ChatPage = () => {
             Ask me anything!
           </p>
         </div>
-        <div className="flex flex-col gap-4">
-          <MessageComponent isAvatarBefore={false} message={"Hello"} />
-          <MessageComponent
-            isAvatarBefore={true}
-            message={"Hello, how can i assist you!"}
-          />
-        </div>
+        <MessagesList />
       </div>
       <div className="fixed flex items-center w-[60vw] space-x-2 bottom-5 border-gray-200 dark:border-gray-800">
         <Input id="prompt" required={true} />

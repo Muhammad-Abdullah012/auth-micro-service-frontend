@@ -8,9 +8,9 @@ import {
 } from "react";
 
 export const chatContext = createContext<{
-  state: { [key: string]: string };
+  state: { [key: string]: any };
   errors: { [key: string]: string };
-  setState: Dispatch<SetStateAction<{ [key: string]: string }>>;
+  setState: Dispatch<SetStateAction<{ [key: string]: any }>>;
   setErrorState: Dispatch<SetStateAction<{ [key: string]: string }>>;
 }>({
   state: {},
