@@ -22,6 +22,6 @@ export const HomePage = () => {
         }
       })();
     }
-  }, [localStorage.getItem(REFRESH_TOKEN)]);
+  }, []);
   return <></>;
 };
