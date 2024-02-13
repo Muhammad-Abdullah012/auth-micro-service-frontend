@@ -1,20 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { logout } from "../../utils/request";
+import { logout, request } from "../../utils/request";
+import { USER_IS_LOGGED_OUT } from "@/constants";
+import { toast } from "react-toastify";
 
 export const HeaderComponent = ({
-  imageUrl,
   dropDownComponent,
 }: {
-  imageUrl: string;
   dropDownComponent: React.ReactNode;
 }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  const [imageUrl, setImageUrl] = useState("");
+  const router = useRouter();
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await request("users/profile", "GET");
+        if (res == USER_IS_LOGGED_OUT) {
+          router.replace("/login");
+          return;
+        }
+        if (res == null || !res.ok) throw "Something went wrong!";
+
+        setImageUrl(res.json.data?.profileImage);
+      } catch (error) {
+        console.error(error);
+        toast.error("Error while fetching user!");
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -26,7 +44,13 @@ export const HeaderComponent = ({
           className={`w-8 h-8 rounded-full md:mr-2 ${
             imageUrl ? "bg-cover bg-center" : "bg-blue-300"
           }`}
-          style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}
+          style={
+            imageUrl
+              ? {
+                  backgroundImage: `url(${process.env.NEXT_PUBLIC_BACKEND_URL}/files/images/${imageUrl})`,
+                }
+              : {}
+          }
         >
           <span className="sr-only">Toggle user menu</span>
         </div>

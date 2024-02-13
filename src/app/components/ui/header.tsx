@@ -9,7 +9,6 @@ export const Header = () => {
 
       <div className="relative inline-block text-left">
         <HeaderComponent
-          imageUrl=""
           dropDownComponent={
             <div className="flex justify-center">
               <div
