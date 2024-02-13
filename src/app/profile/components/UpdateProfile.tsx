@@ -76,7 +76,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
       <div className={"flex flex-row justify-center items-center"}>
         {user?.profileImage ? (
           <img
-            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${user?.profileImage}`}
+            src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/files/images/${user?.profileImage}`}
             alt="profile"
             className="w-16 h-16 rounded-full"
             width={16}

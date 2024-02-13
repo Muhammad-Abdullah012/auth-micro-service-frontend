@@ -99,7 +99,7 @@ export const uploadFiles = async (data: Record<string, any> = {}) => {
     formData.append(k, data[k]);
   });
 
-  return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`, {
+  return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/files/upload`, {
     method: "POST",
     headers,
     body: formData,
