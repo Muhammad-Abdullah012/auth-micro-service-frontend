@@ -33,6 +33,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
 
   const handleCancel = (key: keyof typeof filteredUser) => {
     setIsEditing({ ...isEditing, [key]: false });
+    setEditedValue((editedValue) => {
+      const { [key]: z, ...rest } = editedValue;
+      return rest;
+    });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
