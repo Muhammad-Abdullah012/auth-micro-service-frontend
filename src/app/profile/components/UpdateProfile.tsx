@@ -3,7 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import React, { useState } from "react";
 import { User } from "../../../interfaces";
 import { UserIcon } from "@/components/ui/header";
-import { uploadFiles } from "../../../utils/request";
+import { checkUserName, uploadFiles } from "../../../utils/request";
 import { toast } from "react-toastify";
 import { formatCamelCase } from "../../../utils/format";
 
@@ -15,6 +15,7 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
   const [isEditing, setIsEditing] = useState({});
   const [editedValue, setEditedValue] = useState({});
+  const [err, setErr] = useState("");
 
   const handleEdit = (
     key: keyof typeof filteredUser,
@@ -37,6 +38,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
       const { [key]: z, ...rest } = editedValue;
       return rest;
     });
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    checkUserName({ username: e.target.value })
+      .then((res) => {
+        if (res == null) throw new Error("Something went wrong!");
+        if (!res.ok) {
+          setErr(res.json.message);
+        } else {
+          setErr("");
+        }
+      })
+      .catch((err) => {
+        toast.error("Error checking username!");
+      });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,11 +140,14 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
                     [key]: isBooleanField ? e.target.checked : e.target.value,
                   });
                 }}
+                onBlur={key === "username" ? handleBlur : undefined}
                 className="border border-gray-300 px-2 py-1 rounded-md"
               />
+              {err && <p className="text-red-500 text-xs italic">{err}</p>}
               <div className="flex justify-between">
                 <button
                   onClick={() => handleSave(key)}
+                  disabled={!!err}
                   className="bg-blue-500 text-white px-3 py-1 rounded-md"
                 >
                   Save

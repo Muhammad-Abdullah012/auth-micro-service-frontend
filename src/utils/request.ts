@@ -110,3 +110,16 @@ export const uploadFiles = async (data: Record<string, any> = {}) => {
     })
     .catch((err) => console.error("Error uploading file!"));
 };
+
+export const checkUserName = async ({ username }: { username: string }) => {
+  return request("check-username", "POST", { username })
+    .then((res) => {
+      if (res === USER_IS_LOGGED_OUT) return;
+      if (res == null) return;
+      const { ok, json } = res;
+      return { ok, json };
+    })
+    .catch((err: any) => {
+      console.error("Error is => ", err);
+    });
+};

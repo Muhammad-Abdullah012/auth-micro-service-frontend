@@ -3,7 +3,8 @@ import "react-phone-number-input/style.css";
 import React, { InputHTMLAttributes, useContext, useEffect } from "react";
 import PhoneInput from "react-phone-number-input";
 import { signUpFormContext } from "@/signup/signupContext";
-import { request } from "../../../utils/request";
+import { checkUserName, request } from "../../../utils/request";
+import { toast } from "react-toastify";
 
 export const Input = ({
   className,
@@ -56,20 +57,18 @@ export const Input = ({
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (id === "username") {
-      request("check-username", "POST", { username: e.target.value })
+      checkUserName({ username: e.target.value })
         .then((res) => {
-          if (res == null) return;
-          const { ok, json } = res;
-          console.log("response status ==> ", res);
-          if (!ok) {
+          if (res == null) throw new Error("Something went wrong!");
+          if (!res.ok) {
             setErrorState((prevState) => ({
               ...prevState,
-              [id]: json.message,
+              [id]: res.json.message,
             }));
           }
         })
-        .catch((err: any) => {
-          console.error("Error is => ", err);
+        .catch((err) => {
+          toast.error("Error checking username!");
         });
     }
   };
