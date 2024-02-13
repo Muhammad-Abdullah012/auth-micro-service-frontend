@@ -49,7 +49,7 @@ export const Header = () => {
   );
 };
 
-const UserIcon = (props: SVGAttributes<SVGSVGElement>) => {
+export const UserIcon = (props: SVGAttributes<SVGSVGElement>) => {
   return (
     <svg
       {...props}
