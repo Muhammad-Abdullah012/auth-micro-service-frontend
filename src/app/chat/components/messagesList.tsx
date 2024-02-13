@@ -8,7 +8,7 @@ export const MessagesList = () => {
   const { state } = useContext(chatContext);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-20">
       {state?.messages ? (
         state?.messages?.map(
           (m: { role: ROLE; message: string }, idx: string) => {
