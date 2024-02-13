@@ -122,14 +122,14 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
         />
       </div>
 
-      <div className={"flex flex-col gap-4"}>
+      <div className={"flex flex-col gap-4 w-2/3 pt-16"}>
         {(
           Object.keys(filteredUser ?? {}) as Array<keyof typeof filteredUser>
         ).map((key, idx) => {
           if (filteredUser[key] == null) return null;
           const isBooleanField = typeof filteredUser[key] === "boolean";
           return isEditing[key] ? (
-            <div className="flex flex-col gap-2" key={idx}>
+            <div className="self-center flex flex-col gap-2 w-1/2" key={idx}>
               <input
                 type={isBooleanField ? "checkbox" : "text"}
                 value={editedValue[key]}
@@ -162,24 +162,26 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
             </div>
           ) : (
             <div
-              className="flex flex-row justify-center items-center gap-4"
+              className="flex flex-col gap-2 sm:flex-row sm:justify-between items-center"
               key={idx}
             >
               <span className={"capitalize"}>{formatCamelCase(key)}</span>
 
               {isBooleanField ? (
-                <span className="mr-2">
+                <span className="">
                   <input type="checkbox" checked={filteredUser[key]} readOnly />
                 </span>
               ) : (
-                <span className="mr-2">{filteredUser[key]}</span>
+                <span className="">{filteredUser[key]}</span>
               )}
 
-              {key !== "emailVerified" && (
+              {key !== "emailVerified" ? (
                 <FaEdit
                   onClick={() => handleEdit(key, filteredUser?.[key] ?? "")}
                   className="text-blue-500 hover:underline focus:outline-none cursor-pointer"
                 />
+              ) : (
+                <div style={{ width: 16, height: 16 }}></div>
               )}
             </div>
           );
