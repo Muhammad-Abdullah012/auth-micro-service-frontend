@@ -21,7 +21,7 @@ export const Button = ({
     }
 
     if (Object.keys(errors).length <= 0) {
-      request("chat", "POST", { prompt: state.prompt })
+      request("chat", "POST", { prompt: state.prompt?.trim?.() })
         .then((res) => {
           if (res === USER_IS_LOGGED_OUT) {
             toast.info("Please Login first!");
@@ -54,7 +54,7 @@ export const Button = ({
     <button
       {...rest}
       onClick={handleSubmit}
-      disabled={state.prompt == null || state?.prompt?.length == 0}
+      disabled={state.prompt == null || state?.prompt?.trim?.()?.length == 0}
     >
       {children}
     </button>

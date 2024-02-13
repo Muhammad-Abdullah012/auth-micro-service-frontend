@@ -35,6 +35,7 @@ export const Input = ({
         required={required}
         {...rest}
         onChange={handleChange}
+        style={{ resize: "none", overflowY: "auto" }}
         value={state[id] || ""}
       />
       {/*errors[id] && (
