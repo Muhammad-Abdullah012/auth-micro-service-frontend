@@ -87,3 +87,26 @@ export const logout = async () => {
   }
   return { ok: logout.ok, json: logout.json };
 };
+
+export const uploadFiles = async (data: Record<string, any> = {}) => {
+  const headers: HeadersInit = {};
+  const bearer = localStorage.getItem(BEARER_TOKEN);
+  if (bearer) {
+    headers["Authorization"] = `Bearer ${bearer}`;
+  }
+  const formData = new FormData();
+  Object.keys(data).map((k) => {
+    formData.append(k, data[k]);
+  });
+
+  return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`, {
+    method: "POST",
+    headers,
+    body: formData,
+  })
+    .then(async (res) => {
+      const json = await res.json();
+      return { ok: res.ok, json };
+    })
+    .catch((err) => console.error("Error uploading file!"));
+};

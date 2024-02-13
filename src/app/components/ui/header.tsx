@@ -21,7 +21,7 @@ export const Header = () => {
               >
                 <div className="py-1" role="none">
                   <Link
-                    href="#"
+                    href="/profile"
                     className="text-gray-700 block px-4 py-2 text-sm"
                     role="menuitem"
                     tabIndex={-1}
@@ -29,15 +29,15 @@ export const Header = () => {
                   >
                     Profile
                   </Link>
-                  <Link
-                    href="#"
+                  {/* <Link
+                    href="/profile/edit"
                     className="text-gray-700 block px-4 py-2 text-sm"
                     role="menuitem"
                     tabIndex={-1}
                     id="menu-item-1"
                   >
                     Edit Profile
-                  </Link>
+                  </Link> */}
                   <SignoutBtn />
                 </div>
               </div>
