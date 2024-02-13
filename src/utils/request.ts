@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "react-toastify";
 import { BEARER_TOKEN, REFRESH_TOKEN, USER_IS_LOGGED_OUT } from "@/constants";
 
 export const request = async (url: string, method: string, data?: any) => {
@@ -29,7 +30,9 @@ export const request = async (url: string, method: string, data?: any) => {
       }
       return { ok: res.ok, json };
     })
-    .catch((err) => console.error("Error attempting request => ", err));
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error occured during request!");
+    });
 };
 
 export const validateToken = async () => {
@@ -40,18 +43,20 @@ export const validateToken = async () => {
   if (bearer) {
     headers["Authorization"] = `Bearer ${bearer}`;
   }
-  const validate = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/token/validate`,
-    {
-      headers,
-      method: "POST",
-    }
-  );
-  const json = await validate.json();
-  if (!validate.ok) {
-    return await refreshTokens();
-  }
-  return { ok: validate.ok, json };
+  return fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/token/validate`, {
+    headers,
+    method: "POST",
+  })
+    .then(async (res) => {
+      const json = await res.json();
+      if (!res.ok) {
+        return await refreshTokens();
+      }
+      return { ok: res.ok, json };
+    })
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error validating token!");
+    });
 };
 
 export const refreshTokens = () => {
@@ -64,28 +69,37 @@ export const refreshTokens = () => {
     headers,
     method: "POST",
     body: JSON.stringify({ refreshToken: refresh }),
-  }).then(async (res) => {
-    const json = await res.json();
-    if (res.ok) {
-      const { bearer, refresh } = json?.data ?? {};
-      localStorage.setItem(BEARER_TOKEN, bearer?.token ?? "");
-      localStorage.setItem(REFRESH_TOKEN, refresh?.token ?? "");
-    } else {
-      localStorage.removeItem(BEARER_TOKEN);
-      localStorage.removeItem(REFRESH_TOKEN);
-    }
-    return { ok: res.ok, json };
-  });
+  })
+    .then(async (res) => {
+      const json = await res.json();
+      if (res.ok) {
+        const { bearer, refresh } = json?.data ?? {};
+        localStorage.setItem(BEARER_TOKEN, bearer?.token ?? "");
+        localStorage.setItem(REFRESH_TOKEN, refresh?.token ?? "");
+      } else {
+        localStorage.removeItem(BEARER_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
+      }
+      return { ok: res.ok, json };
+    })
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error occured during request!");
+    });
 };
 
 export const logout = async () => {
-  const logout = await request("logout", "POST");
-  if (!logout || logout === USER_IS_LOGGED_OUT) return;
-  if (logout.ok) {
-    localStorage.removeItem(BEARER_TOKEN);
-    localStorage.removeItem(REFRESH_TOKEN);
-  }
-  return { ok: logout.ok, json: logout.json };
+  return request("logout", "POST")
+    .then((res) => {
+      if (!res || res === USER_IS_LOGGED_OUT) return;
+      if (res.ok) {
+        localStorage.removeItem(BEARER_TOKEN);
+        localStorage.removeItem(REFRESH_TOKEN);
+      }
+      return { ok: res.ok, json: res.json };
+    })
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error during request!");
+    });
 };
 
 export const uploadFiles = async (data: Record<string, any> = {}) => {
@@ -108,7 +122,9 @@ export const uploadFiles = async (data: Record<string, any> = {}) => {
       const json = await res.json();
       return { ok: res.ok, json };
     })
-    .catch((err) => console.error("Error uploading file!"));
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error uploading file!");
+    });
 };
 
 export const checkUserName = async ({ username }: { username: string }) => {
@@ -119,7 +135,7 @@ export const checkUserName = async ({ username }: { username: string }) => {
       const { ok, json } = res;
       return { ok, json };
     })
-    .catch((err: any) => {
-      console.error("Error is => ", err);
+    .catch((err) => {
+      toast.error(err.message ? err.message : "Error validating username");
     });
 };
