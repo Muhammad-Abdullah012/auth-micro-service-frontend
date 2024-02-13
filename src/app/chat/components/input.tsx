@@ -33,6 +33,12 @@ export const Input = ({
         }
         id={id}
         required={required}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            document.getElementById("promptInputButton")?.click?.();
+          }
+        }}
         {...rest}
         onChange={handleChange}
         style={{ resize: "none", overflowY: "auto" }}

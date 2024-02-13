@@ -52,6 +52,7 @@ export const Button = ({
 
   return (
     <button
+      id="promptInputButton"
       {...rest}
       onClick={handleSubmit}
       disabled={state.prompt == null || state?.prompt?.trim?.()?.length == 0}
