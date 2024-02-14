@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { loginFormContext } from "../loginContext";
+import { BUTTON_STATE } from "../../../interfaces";
 
 export const Input = ({
   className,
@@ -21,10 +22,14 @@ export const Input = ({
     useContext(loginFormContext);
 
   useEffect(() => {
-    setErrorState((prevState) => ({
+    setState((prevState) => ({
       ...prevState,
-      ...(required ? { [id]: "Please fill this field!" } : {}),
+      submitButtonState: BUTTON_STATE.DISABLED,
     }));
+    // setErrorState((prevState) => ({
+    //   ...prevState,
+    //   ...(required ? { [id]: "Please fill this field!" } : {}),
+    // }));
   }, []);
 
   const resetErrors = useCallback(() => {
@@ -37,9 +42,16 @@ export const Input = ({
     });
   }, [id]);
 
+  const enableButtonState = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      submitButtonState: BUTTON_STATE.ENABLED,
+    }));
+  }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    enableButtonState();
     const { value } = event.target;
-    resetErrors();
+    // resetErrors();
     setState((prevState) => ({ ...prevState, [id]: value }));
   };
 
