@@ -11,7 +11,7 @@ export default function Component() {
           className="w-full mt-1"
           id="emailOrUsername"
           placeholder="Enter your email"
-          required
+          required={true}
           type="text"
         />
       </div>
@@ -21,7 +21,7 @@ export default function Component() {
           className="w-full mt-1"
           id="password"
           placeholder="Enter your password"
-          required
+          required={true}
           type="password"
         />
       </div>

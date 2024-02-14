@@ -51,7 +51,18 @@ export const Input = ({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     enableButtonState();
     const { value } = event.target;
-    // resetErrors();
+
+    switch (true) {
+      case id === "password" && value.length < 9:
+        setErrorState((prevState) => ({
+          ...prevState,
+          [id]: "Password must be atleast 9 characters long!",
+        }));
+        break;
+      default:
+        resetErrors();
+    }
+
     setState((prevState) => ({ ...prevState, [id]: value }));
   };
 
