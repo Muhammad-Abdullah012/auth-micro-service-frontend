@@ -12,7 +12,7 @@ export default function SignUpPage() {
           id="firstName"
           placeholder="Enter your first name"
           type="text"
-          required
+          required={true}
         />
       </div>
       <div>
@@ -22,7 +22,7 @@ export default function SignUpPage() {
           id="lastName"
           placeholder="Enter your last name"
           type="text"
-          required
+          required={true}
         />
       </div>
       <div>
@@ -31,7 +31,7 @@ export default function SignUpPage() {
           className="w-full mt-1"
           id="username"
           placeholder="Enter your username"
-          required
+          required={true}
           type="text"
         />
       </div>
@@ -41,7 +41,7 @@ export default function SignUpPage() {
           className="w-full mt-1"
           id="email"
           placeholder="Enter your email"
-          required
+          required={true}
           type="email"
         />
       </div>
@@ -50,7 +50,7 @@ export default function SignUpPage() {
         <Input
           className="w-full mt-1"
           id="dateOfBirth"
-          required
+          required={true}
           type="date"
           max={new Date().toISOString().split("T")[0]}
         />
@@ -70,7 +70,7 @@ export default function SignUpPage() {
           className="w-full mt-1"
           id="password"
           placeholder="Enter your password"
-          required
+          required={true}
           type="password"
         />
       </div>
@@ -80,7 +80,7 @@ export default function SignUpPage() {
           className="w-full mt-1"
           id="confirmPassword"
           placeholder="Confirm your password"
-          required
+          required={true}
           type="password"
         />
       </div>

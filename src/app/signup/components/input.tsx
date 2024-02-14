@@ -1,10 +1,16 @@
 "use client";
 import "react-phone-number-input/style.css";
-import React, { InputHTMLAttributes, useContext, useEffect } from "react";
+import React, {
+  InputHTMLAttributes,
+  useCallback,
+  useContext,
+  useEffect,
+} from "react";
 import PhoneInput from "react-phone-number-input";
+import { toast } from "react-toastify";
 import { signUpFormContext } from "@/signup/signupContext";
 import { checkUserName, request } from "../../../utils/request";
-import { toast } from "react-toastify";
+import { BUTTON_STATE } from "../../../interfaces";
 
 export const Input = ({
   className,
@@ -21,13 +27,24 @@ export const Input = ({
     useContext(signUpFormContext);
 
   useEffect(() => {
-    setErrorState((prevState) => ({
+    setState((prevState) => ({
       ...prevState,
-      ...(required ? { [id]: "Please fill this field!" } : {}),
+      submitButtonState: BUTTON_STATE.DISABLED,
+    }));
+    // setErrorState((prevState) => ({
+    //   ...prevState,
+    //   ...(required ? { [id]: "Please fill this field!" } : {}),
+    // }));
+  }, []);
+  const enableButtonState = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      submitButtonState: BUTTON_STATE.ENABLED,
     }));
   }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    enableButtonState();
     const { value } = event.target;
     switch (true) {
       case id === "password" && value.length < 9:

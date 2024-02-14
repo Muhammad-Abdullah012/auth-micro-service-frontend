@@ -28,3 +28,8 @@ export enum ROLE {
   PROMPT = "PROMPT",
   RESPONSE = "RESPONSE",
 }
+
+export enum BUTTON_STATE {
+  DISABLED = "DISABLED",
+  ENABLED = "ENABLED",
+}
