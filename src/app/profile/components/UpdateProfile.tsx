@@ -62,6 +62,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user, onUpdateField }) => {
       uploadFiles({ profileImage: selectedImage })
         .then((res) => {
           if (res == null || !res.ok) return;
+          toast.success("Image uploaded successfully!");
           const data = res.json.data;
 
           onUpdateField({ profileImage: data?.[0]?.profileImage });
