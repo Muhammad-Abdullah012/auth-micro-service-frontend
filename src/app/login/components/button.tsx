@@ -1,5 +1,5 @@
 "use client";
-import React, { ButtonHTMLAttributes, useContext } from "react";
+import React, { ButtonHTMLAttributes, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { loginFormContext } from "../loginContext";
@@ -11,26 +11,41 @@ export const Button = ({
   children,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const { errors, state, setErrorState } = useContext(loginFormContext);
+  const { errors, state, setErrorState, setState } =
+    useContext(loginFormContext);
   const router = useRouter();
 
-  const handleSubmit = () => {
+  useEffect(() => {
     const inputs = document.querySelectorAll("input");
     const requiredFields: boolean[] = [];
     inputs.forEach((i) => {
       requiredFields.push(i.required && !i.value);
-      if (i.required && !i.value) {
-        setErrorState((prevState) => ({
-          ...prevState,
-          [i.id]: "Please fill this field!",
-        }));
-      }
     });
-    if (requiredFields.some((v) => v)) return;
-    if (Object.keys(state).length === 0) {
-      console.error("Please fill data!");
-      return;
+    if (requiredFields.some((v) => v)) {
+      setState((prev) => ({
+        ...prev,
+        submitButtonState: BUTTON_STATE.DISABLED,
+      }));
     }
+  }, [state]);
+
+  const handleSubmit = () => {
+    // const inputs = document.querySelectorAll("input");
+    // const requiredFields: boolean[] = [];
+    // inputs.forEach((i) => {
+    //   requiredFields.push(i.required && !i.value);
+    //   if (i.required && !i.value) {
+    //     setErrorState((prevState) => ({
+    //       ...prevState,
+    //       [i.id]: "Please fill this field!",
+    //     }));
+    //   }
+    // });
+    // if (requiredFields.some((v) => v)) return;
+    // if (Object.keys(state).length === 0) {
+    //   console.error("Please fill data!");
+    //   return;
+    // }
 
     if (Object.keys(errors).length <= 0) {
       request("login", "POST", {
