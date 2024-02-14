@@ -1,0 +1,3 @@
+export const BEARER_TOKEN = "BEARER_TOKEN";
+export const REFRESH_TOKEN = "REFRESH_TOKEN";
+export const USER_IS_LOGGED_OUT = "USER_IS_LOGGED_OUT";

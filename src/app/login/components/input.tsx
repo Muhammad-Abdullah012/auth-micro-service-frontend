@@ -1,10 +1,16 @@
 "use client";
-import React, { InputHTMLAttributes, useContext, useState } from "react";
-import { signUpFormContext } from "@/signup/signupContext";
-import { request } from "../../../utils/request";
+import React, {
+  InputHTMLAttributes,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
+import { loginFormContext } from "../loginContext";
+import { BUTTON_STATE } from "../../../interfaces";
 
 export const Input = ({
   className,
+  required,
   id,
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>) => {
@@ -12,11 +18,40 @@ export const Input = ({
     console.error("id is required in input field!");
     return;
   }
-  const { state, setState, errors, setErrorState } =
-    useContext(signUpFormContext);
+  const { state, setState, setErrorState, errors } =
+    useContext(loginFormContext);
 
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      submitButtonState: BUTTON_STATE.DISABLED,
+    }));
+    // setErrorState((prevState) => ({
+    //   ...prevState,
+    //   ...(required ? { [id]: "Please fill this field!" } : {}),
+    // }));
+  }, []);
+
+  const resetErrors = useCallback(() => {
+    setErrorState((prevState) => {
+      if (prevState[id]) {
+        const { [id]: deletedError, ...newErrors } = prevState;
+        return newErrors;
+      }
+      return prevState;
+    });
+  }, [id]);
+
+  const enableButtonState = useCallback(() => {
+    setState((prevState) => ({
+      ...prevState,
+      submitButtonState: BUTTON_STATE.ENABLED,
+    }));
+  }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    enableButtonState();
     const { value } = event.target;
+
     switch (true) {
       case id === "password" && value.length < 9:
         setErrorState((prevState) => ({
@@ -24,38 +59,11 @@ export const Input = ({
           [id]: "Password must be atleast 9 characters long!",
         }));
         break;
-      case id === "confirmPassword" && state.password !== value:
-        setErrorState((prevState) => ({
-          ...prevState,
-          [id]: "Confirm password must match the password",
-        }));
-        break;
       default:
-        setErrorState((prevState) => {
-          if (prevState[id]) {
-            const { [id]: deletedError, ...newErrors } = prevState;
-            return newErrors;
-          }
-          return prevState;
-        });
+        resetErrors();
     }
 
     setState((prevState) => ({ ...prevState, [id]: value }));
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (id === "username") {
-      request("check-username", "POST", { username: e.target.value })
-        .then((res) => {
-          console.log("response status ==> ", res);
-          if (res.message === "Username is already in use!") {
-            setErrorState((prevState) => ({ ...prevState, [id]: res.message }));
-          }
-        })
-        .catch((err: any) => {
-          console.error("Error is => ", err);
-        });
-    }
   };
 
   return (
@@ -66,9 +74,9 @@ export const Input = ({
           className
         }
         id={id}
+        required={required}
         {...rest}
         onChange={handleChange}
-        onBlur={handleBlur}
         value={state[id] || ""}
       />
       {errors[id] && (
