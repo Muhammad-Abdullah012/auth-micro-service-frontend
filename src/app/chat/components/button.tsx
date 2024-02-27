@@ -21,6 +21,16 @@ export const Button = ({
     }
 
     if (Object.keys(errors).length <= 0) {
+      setState((prevState) => {
+        const newMessages = [{ role: ROLE.PROMPT, message: prevState.prompt }];
+        return {
+          ...prevState,
+          messages: prevState.messages
+            ? [...prevState.messages, ...newMessages]
+            : newMessages,
+          isLoading: true,
+        };
+      });
       request("chat", "POST", { prompt: state.prompt?.trim?.() })
         .then((res) => {
           if (res === USER_IS_LOGGED_OUT) {
@@ -31,7 +41,6 @@ export const Button = ({
           if (res == null || !res.ok) return;
           setState((prevState) => {
             const newMessages = [
-              { role: ROLE.PROMPT, message: prevState.prompt },
               { role: ROLE.RESPONSE, message: res.json.data },
             ];
 
@@ -44,7 +53,10 @@ export const Button = ({
             };
           });
         })
-        .catch((err) => console.error("Error sending request => ", err));
+        .catch((err) => console.error("Error sending request => ", err))
+        .finally(() => {
+          setState((prevState) => ({ ...prevState, isLoading: false }));
+        });
     } else {
       console.error("Errors => ", errors);
     }

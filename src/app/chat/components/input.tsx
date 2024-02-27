@@ -13,11 +13,11 @@ export const Input = ({
   id,
   ...rest
 }: InputHTMLAttributes<HTMLTextAreaElement>) => {
+  const { state, setState } = useContext(chatContext);
   if (!id) {
     console.error("id is required in input field!");
     return;
   }
-  const { state, setState } = useContext(chatContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;

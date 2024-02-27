@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { USER_IS_LOGGED_OUT } from "@/constants";
 import { useRouter } from "next/navigation";
 
-const profilePage = () => {
+const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   useEffect(() => {
@@ -25,7 +25,7 @@ const profilePage = () => {
         toast.error("Error while fetching user!");
       }
     })();
-  }, []);
+  }, [router]);
 
   const onUpdateField = (updatedValues: {}) => {
     request("users/update-profile", "POST", updatedValues)
@@ -49,4 +49,4 @@ const profilePage = () => {
   return <UserProfile user={user} onUpdateField={onUpdateField} />;
 };
 
-export default profilePage;
+export default ProfilePage;

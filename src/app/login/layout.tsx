@@ -14,7 +14,7 @@ export default function SignUpPageLayout({
         </h1>
         <LoginFormContextProvider>{children}</LoginFormContextProvider>
         <p className="mt-4 text-center text-gray-500 dark:text-gray-400">
-          Don't have an account?
+          Don&apos; t have an account?
           <Link
             className="underline text-blue-500 hover:text-blue-700"
             href="/signup"

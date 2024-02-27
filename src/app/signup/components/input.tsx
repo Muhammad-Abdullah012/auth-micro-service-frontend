@@ -18,11 +18,6 @@ export const Input = ({
   required,
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>) => {
-  if (!id) {
-    console.error("id is required in input field!");
-    return;
-  }
-
   const { state, setState, errors, setErrorState } =
     useContext(signUpFormContext);
 
@@ -35,13 +30,18 @@ export const Input = ({
     //   ...prevState,
     //   ...(required ? { [id]: "Please fill this field!" } : {}),
     // }));
-  }, []);
+  }, [setState]);
   const enableButtonState = useCallback(() => {
     setState((prevState) => ({
       ...prevState,
       submitButtonState: BUTTON_STATE.ENABLED,
     }));
-  }, []);
+  }, [setState]);
+
+  if (!id) {
+    console.error("id is required in input field!");
+    return;
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     enableButtonState();

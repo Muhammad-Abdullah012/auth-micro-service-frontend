@@ -30,6 +30,11 @@ export const MessagesList = () => {
           />
         </>
       )}
+      {state.isLoading ? (
+        <div id="loading-spinner" className="self-center"></div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

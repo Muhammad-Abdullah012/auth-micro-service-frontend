@@ -32,7 +32,7 @@ export const HeaderComponent = ({
         toast.error("Error while fetching user!");
       }
     })();
-  }, []);
+  }, [router]);
 
   return (
     <>

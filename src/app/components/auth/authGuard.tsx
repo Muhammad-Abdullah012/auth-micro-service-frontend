@@ -22,7 +22,7 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
         }
       })();
     }
-  }, []);
+  }, [router]);
   if (isAuthenticated) return <>{children}</>;
   else return <LoadingSpinner />;
 };
