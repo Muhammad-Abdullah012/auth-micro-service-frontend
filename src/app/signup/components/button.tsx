@@ -27,7 +27,7 @@ export const Button = ({
         submitButtonState: BUTTON_STATE.DISABLED,
       }));
     }
-  }, []);
+  }, [setState]);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     // const inputs = document.querySelectorAll("input");

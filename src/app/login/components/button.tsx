@@ -26,7 +26,7 @@ export const Button = ({
         submitButtonState: BUTTON_STATE.DISABLED,
       }));
     }
-  }, []);
+  }, [setState]);
 
   const handleSubmit = () => {
     // const inputs = document.querySelectorAll("input");

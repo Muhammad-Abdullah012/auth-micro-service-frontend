@@ -30,7 +30,7 @@ export const Input = ({
     //   ...prevState,
     //   ...(required ? { [id]: "Please fill this field!" } : {}),
     // }));
-  }, []);
+  }, [setState]);
   const enableButtonState = useCallback(() => {
     setState((prevState) => ({
       ...prevState,
