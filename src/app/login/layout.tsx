@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LoginFormContextProvider } from "./loginContext";
+import { AuthContextProvider } from "@/components/auth/authContext";
 
 export default function SignUpPageLayout({
   children,
@@ -12,7 +12,7 @@ export default function SignUpPageLayout({
         <h1 className="mb-4 text-2xl text-center font-bold text-gray-900 dark:text-gray-100">
           Login
         </h1>
-        <LoginFormContextProvider>{children}</LoginFormContextProvider>
+        <AuthContextProvider>{children}</AuthContextProvider>
         <p className="mt-4 text-center text-gray-500 dark:text-gray-400">
           Don&apos; t have an account?
           <a

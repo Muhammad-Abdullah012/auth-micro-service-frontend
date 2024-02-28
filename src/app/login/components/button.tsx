@@ -2,17 +2,16 @@
 import React, { ButtonHTMLAttributes, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { loginFormContext } from "../loginContext";
 import { request } from "../../../utils/request";
 import { BEARER_TOKEN, REFRESH_TOKEN, USER_IS_LOGGED_OUT } from "@/constants";
 import { BUTTON_STATE } from "../../../interfaces";
+import { authContext } from "@/components/auth/authContext";
 
 export const Button = ({
   children,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const { errors, state, setErrorState, setState } =
-    useContext(loginFormContext);
+  const { errors, state, setErrorState, setState } = useContext(authContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const Button = ({
         submitButtonState: BUTTON_STATE.DISABLED,
       }));
     }
-  }, [state, setState]);
+  }, []);
 
   const handleSubmit = () => {
     // const inputs = document.querySelectorAll("input");

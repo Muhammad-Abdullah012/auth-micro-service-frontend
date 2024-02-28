@@ -5,8 +5,8 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { loginFormContext } from "../loginContext";
 import { BUTTON_STATE } from "../../../interfaces";
+import { authContext } from "@/components/auth/authContext";
 
 export const Input = ({
   className,
@@ -14,8 +14,7 @@ export const Input = ({
   id,
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>) => {
-  const { state, setState, setErrorState, errors } =
-    useContext(loginFormContext);
+  const { state, setState, setErrorState, errors } = useContext(authContext);
 
   useEffect(() => {
     setState((prevState) => ({
@@ -26,7 +25,7 @@ export const Input = ({
     //   ...prevState,
     //   ...(required ? { [id]: "Please fill this field!" } : {}),
     // }));
-  }, [, setState]);
+  }, []);
 
   const resetErrors = useCallback(() => {
     if (!id) {

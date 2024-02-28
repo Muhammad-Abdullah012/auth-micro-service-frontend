@@ -6,13 +6,13 @@ import { signUpFormContext } from "@/signup/signupContext";
 import { request } from "../../../utils/request";
 import { BEARER_TOKEN, REFRESH_TOKEN, USER_IS_LOGGED_OUT } from "@/constants";
 import { BUTTON_STATE } from "../../../interfaces";
+import { authContext } from "@/components/auth/authContext";
 
 export const Button = ({
   children,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const { errors, state, setErrorState, setState } =
-    useContext(signUpFormContext);
+  const { errors, state, setErrorState, setState } = useContext(authContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const Button = ({
         submitButtonState: BUTTON_STATE.DISABLED,
       }));
     }
-  }, [state, setState]);
+  }, []);
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     // const inputs = document.querySelectorAll("input");

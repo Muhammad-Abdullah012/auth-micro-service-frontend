@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { signUpFormContext } from "@/signup/signupContext";
 import { checkUserName, request } from "../../../utils/request";
 import { BUTTON_STATE } from "../../../interfaces";
+import { authContext } from "@/components/auth/authContext";
 
 export const Input = ({
   className,
@@ -18,8 +19,7 @@ export const Input = ({
   required,
   ...rest
 }: InputHTMLAttributes<HTMLInputElement>) => {
-  const { state, setState, errors, setErrorState } =
-    useContext(signUpFormContext);
+  const { state, setState, errors, setErrorState } = useContext(authContext);
 
   useEffect(() => {
     setState((prevState) => ({
@@ -30,7 +30,7 @@ export const Input = ({
     //   ...prevState,
     //   ...(required ? { [id]: "Please fill this field!" } : {}),
     // }));
-  }, [setState]);
+  }, []);
   const enableButtonState = useCallback(() => {
     setState((prevState) => ({
       ...prevState,
